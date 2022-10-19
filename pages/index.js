@@ -1,6 +1,7 @@
 import Head from 'next/head';
-
-export default function Home() {
+import ArticleList from '../components/ArticleList';
+export default function Home({articles}) {
+  console.log(articles);
   return (
   
       <div >
@@ -8,11 +9,17 @@ export default function Home() {
         <title> Home Page </title>
         <meta name='keywords' content='web developmenet,Programming' />
       </Head>
-        Welcome to Next
+<ArticleList articles={articles} />
       </div>
     
   )
 }
 export const getStaticProps = async()=>{
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=6")
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=6");
+  const articles =  await res.json();
+  return{
+    props:{
+      articles
+    }
+  }
 }
